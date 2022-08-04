@@ -17,5 +17,14 @@ sqlc:
 
 test:
 	go test -v -cover ./...
+	
+build:
+	go build -o .
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+server:
+	./simplebank
+	
+mock:
+	mockgen --build_flags=--mod=mod -package mockdb  -destination db/mock/store.go  github.com/vagnerpelais/simplebank/db/sqlc Store	
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test build server mock
