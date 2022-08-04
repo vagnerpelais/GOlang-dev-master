@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Wed Aug  3 10:41:48 2022
+# Make data base, printed on Thu Aug  4 13:52:08 2022
 
 # Variables
 
@@ -36,6 +36,8 @@ _ = /usr/bin/make
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
@@ -44,11 +46,13 @@ P9K_SSH = 0
 # environment
 VSCODE_CWD = /Users/vagnerbohm/Documents/github/gomastery
 # environment
-PATH = /Users/vagnerbohm/opt/miniconda3/bin:/Users/vagnerbohm/opt/miniconda3/condabin:/opt/homebrew/opt/mysql-client/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/Users/vagnerbohm/.fig/bin:/Users/vagnerbohm/.local/bin
+GOPROXY = https://proxy.golang.org,direct
+# environment
+PATH = /Users/vagnerbohm/opt/miniconda3/bin:/Users/vagnerbohm/opt/miniconda3/condabin:/opt/homebrew/opt/mysql-client/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/usr/local/go/bin:/Users/vagnerbohm/.fig/bin:/Users/vagnerbohm/.local/bin:/Users/vagnerbohm/go/bin
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
-LaunchInstanceID = 2AAB6223-2E24-4405-BD7A-4B2CB5D1E351
+GOPATH = /Users/vagnerbohm/go
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
@@ -62,7 +66,7 @@ CONDA_EXE = /Users/vagnerbohm/opt/miniconda3/bin/conda
 # environment
 TTY = not a tty
 # environment
-FIG_PID = 11034
+FIG_PID = 58997
 # environment
 PWD = /Users/vagnerbohm/Documents/github/gomastery
 # environment
@@ -72,7 +76,7 @@ ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
 MANPATH = /opt/homebrew/share/man::
 # environment
-VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+GOMODCACHE = /Users/vagnerbohm/go/pkg/mod
 # environment
 HOME = /Users/vagnerbohm
 # default
@@ -84,7 +88,7 @@ VSCODE_CODE_CACHE_PATH = /Users/vagnerbohm/Library/Application Support/Code/Cach
 # environment
 LOGNAME = vagnerbohm
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 CONDA_PROMPT_MODIFIER = (base) 
 # environment
@@ -112,7 +116,7 @@ USER = vagnerbohm
 # environment
 FIG_TERM_VERSION = 4.4.2
 # environment
-TERM_SESSION_ID = 79979710-4255-42D6-8A39-AEF4A1A7004F
+TERM_SESSION_ID = 8BDC97CD-515B-4A23-B605-274500C4392A
 # environment
 LESS = -R
 # automatic
@@ -144,7 +148,7 @@ MFLAGS = -Rrqp
 # environment
 TERM_PROGRAM_VERSION = 445
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.6329497.6329503.66032B50-D398-4C6C-902C-CF8C4F5D906C
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.6329497.6329503.BB0E5EBA-98D5-480F-81B7-07D60A3D2338
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # automatic
@@ -168,8 +172,6 @@ LC_ALL = C
 # environment
 CONDA_PYTHON_EXE = /Users/vagnerbohm/opt/miniconda3/bin/python
 # environment
-SECURITYSESSIONID = 186a5
-# environment
 P9K_TTY = old
 # automatic
 ^F = $(notdir $^)
@@ -190,13 +192,13 @@ TERM = xterm-256color
 # environment
 _P9K_TTY = not a tty
 # environment
-VSCODE_PID = 418
+VSCODE_PID = 59171
 # environment
 _CE_CONDA = 
 # environment
 LANG = C
 # variable set hash-table stats:
-# Load=92/1024=9%, Rehash=0, Collisions=4/116=3%
+# Load=93/1024=9%, Rehash=0, Collisions=5/117=4%
 
 # Pattern-specific Variable Values
 
@@ -204,9 +206,9 @@ LANG = C
 
 # Directories
 
-# . (device 16777231, inode 7083164): 5 files, no impossibilities.
+# . (device 16777231, inode 7083164): 15 files, no impossibilities.
 
-# 5 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -232,10 +234,28 @@ all:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-.PHONY: postgres createdb dropdb
+migratedown1:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 21):
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
+	
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test build server mock migratedown1 migrateup1
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+sqlc:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 24):
+	sqlc generate
+	
 
 # Not a target:
 .SUFFIXES:
@@ -246,24 +266,54 @@ all:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-03 10:41:26
+#  Last modified 2022-08-04 11:38:39
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+server:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 33):
+	./simplebank
+	
+
+test:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 27):
+	go test -v -cover ./...
+	
+
+build:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 30):
+	go build -o .
+	
 
 createdb:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 4):
+#  commands to execute (from `Makefile', line 5):
 	docker exec -it postgres-bank createdb --username=root --owner=root simple_bank 
 	
 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
+ 
+make: *** No rule to make target `all'.  Stop.
+
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -272,12 +322,48 @@ dropdb:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 7):
+#  commands to execute (from `Makefile', line 8):
 	docker exec -it postgres-bank dropdb simple_bank
 	
 
+migrateup:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 11):
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	
+
+migrateup1:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 14):
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	
+
+migratedown:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 18):
+	migrate -path db/migration -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	
+
+mock:
+#  Phony target (prerequisite of .PHONY).
+#  Implicit rule search has not been done.
+#  File does not exist.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 36):
+	mockgen --build_flags=--mod=mod -package mockdb  -destination db/mock/store.go  github.com/vagnerpelais/simplebank/db/sqlc Store	
+	
+
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/23=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/41=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -289,8 +375,6 @@ dropdb:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Aug  3 10:41:48 2022
+# Finished Make data base on Thu Aug  4 13:52:10 2022
 
  
-make: *** No rule to make target `all'.  Stop.
-
