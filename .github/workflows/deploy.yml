@@ -1,6 +1,5 @@
 name: Deploy to production
 
-
 on:
   push:
     branches: [ "main" ]
@@ -8,7 +7,6 @@ on:
 jobs:
 
   build:
-    name: build image
     runs-on: ubuntu-latest
    
     steps:
@@ -23,7 +21,7 @@ jobs:
 
     - name: Login to amazon ECR
       id: login-ecr
-      user: aws-actions/amazon-ecr-login@v1
+      uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push image to amazon ecr
       env:
