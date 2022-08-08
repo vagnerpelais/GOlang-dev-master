@@ -5,7 +5,7 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=bank
+      - POSTGRES_DB=simple_bank
   api:
     build:
       context: .
